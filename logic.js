@@ -1,18 +1,24 @@
-let city = "";
 const cityInput = document.querySelector("#city-input");
-const inputBtn = document.querySelector("#search-btn");
-const APIKey = "11f79b3d45f42e998837721c4179ed02";
-const citySearchURL = `api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`
+const searchForm = document.querySelector("#search-form");
+const APIKey = "b4c54130ab13df94f32df953f198e331";
+
+function getCoords(input){
+    console.log(input);
+    let city = input;
+    let cityCoordURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`
+    fetch(cityCoordURL)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+
+}
 
 function getForecast(e){
     e.preventDefault();
-    city = cityInput.value;
+    city = cityInput.value.trim();
     console.log(city);
-    fetch(`api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`)
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
+    getCoords(city);
     
 }
 
-inputBtn.addEventListener("click", getForecast);
+searchForm.addEventListener("submit", getForecast);
