@@ -13,11 +13,20 @@ function renderForecast(info) {
 }
 
 function saveCity(input){
-    var history = JSON.parse(localStorage.getItem("search-history"));
+    var history = localStorage.getItem("search-history");
+    let tempArr = [];
     if (!history) {
         history = [];
         history.push(input);
-        localStorage.setItem("search-history", input);
+        localStorage.setItem("search-history", history);
+    }
+    else {
+        //got stuck here trying to figure out a way to store a new array as a string in local storage
+        console.log(typeof history);
+        tempArr.push(history);
+        tempArr.push(input);
+        console.log(tempArr);
+
     }
 }
 
