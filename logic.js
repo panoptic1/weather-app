@@ -14,20 +14,20 @@ function renderForecast(info) {
 
 function saveCity(input){
     var history = localStorage.getItem("search-history");
-    let tempArr = [];
-    if (!history) {
-        history = [];
-        history.push(input);
-        localStorage.setItem("search-history", history);
-    }
-    else {
-        //got stuck here trying to figure out a way to store a new array as a string in local storage
-        console.log(typeof history);
+    var tempArr = []
+    if (history) {
         tempArr.push(history);
-        tempArr.push(input);
-        console.log(tempArr);
-
     }
+    tempArr.push(input);
+    localStorage.setItem("search-history", tempArr);
+    renderHistory();
+}
+
+function renderHistory() {
+    console.log(localStorage.getItem("search-history"));
+    //So what I have gathered at this point is that I can't simply JSON.parse a list coming back from localStorage
+    //var histArr = JSON.parse(localStorage.getItem("search-history"));
+    console.log(histArr);
 }
 
 function getForecast(e){
