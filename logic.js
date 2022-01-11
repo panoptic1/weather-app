@@ -14,20 +14,35 @@ function renderForecast(info) {
 
 function saveCity(input){
     var history = localStorage.getItem("search-history");
+    console.log(history);
+    console.log(typeof history);
     var tempArr = []
     if (history) {
-        tempArr.push(history);
+        history = JSON.parse(localStorage.getItem("search-history"));
+        for (city of history) {
+            tempArr.push(city);
+        }
+    } 
+
+    if (tempArr.includes(input)){
+        console.log("Already got that one!");
+        localStorage.setItem("search-history", JSON.stringify(tempArr));
+        renderHistory();
+    } else {
+        console.log("That's a new one!");
+        tempArr.push(input);
+        localStorage.setItem("search-history", JSON.stringify(tempArr));
+        renderHistory();
     }
-    tempArr.push(input);
-    localStorage.setItem("search-history", tempArr);
-    renderHistory();
+    
 }
 
 function renderHistory() {
-    console.log(localStorage.getItem("search-history"));
+    var histArr = JSON.parse(localStorage.getItem("search-history"));
     //So what I have gathered at this point is that I can't simply JSON.parse a list coming back from localStorage
     //var histArr = JSON.parse(localStorage.getItem("search-history"));
     console.log(histArr);
+    
 }
 
 function getForecast(e){
