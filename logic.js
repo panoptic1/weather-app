@@ -1,6 +1,7 @@
 const cityInput = document.querySelector("#city-input");
 const searchForm = document.querySelector("#search-form");
 const APIKey = "b4c54130ab13df94f32df953f198e331";
+const histBox = document.querySelector('.buttons');
 
 
 
@@ -42,6 +43,15 @@ function renderHistory() {
     //So what I have gathered at this point is that I can't simply JSON.parse a list coming back from localStorage
     //var histArr = JSON.parse(localStorage.getItem("search-history"));
     console.log(histArr);
+
+    for (city of histArr) {
+        var city = city;
+        var button = document.createElement("button");
+        button.classList.add("hist-btn");
+        button.innerText = city;
+        histBox.append(button);
+
+    }
     
 }
 
