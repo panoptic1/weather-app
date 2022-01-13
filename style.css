@@ -24,3 +24,11 @@ input {
 .hist-btn {
   display: block;
 }
+
+.daily {
+  background-color: palevioletred;
+}
+
+.five-day {
+  background-color: purple;
+}
