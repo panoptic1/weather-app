@@ -4,25 +4,43 @@ const APIKey = "b4c54130ab13df94f32df953f198e331";
 const histBox = document.querySelector('.buttons');
 const dailyBox = document.querySelector('#daily');
 const fiveDayBox = document.querySelector('#five-day');
-
+//putting 'city' in the global scope since the One Call API object doesn't seem to have a city name property
 let city;
 
 function renderForecast(info){
     console.log(info);
-    console.log(city);
+    //create variables for all of the relevant weather info that needs to be displayed
+    let timestamp = info.current.dt;
+    let dateObj = new Date(timestamp * 1000);
+    let humanDate = dateObj.toLocaleString("en-US", {weekday: "long", month: "long", day: "numeric", year: "numeric"});
+    let temperature = Math.round((info.current.temp - 273.5) * 1.8 + 32);
+    let uvi = info.current.uvi;
+    let wind = info.current.wind_speed;
+    let humidity = info.current.humidity;
+    let icon = info.current.weather[0].icon;
+    let description = info.current.weather[0].description;
+    
+    //create variable for the template that will be appended to the forecast box
+    let template = `
+        <span>${city}</span> - <span>${humanDate}</span>
+        <br>
+        <span>Temp: ${temperature}°F</span>
+        <br>
+        <span>Wind: ${wind}mph</span>
+        <br>
+        <span>Humidity: ${humidity}%</span>
+    `
+    
+    dailyBox.innerHTML = template;
+    renderFiveDay(info);
+}
+
+function renderFiveDay(info){
+    console.log(info);
 }
 
 function getForecast(info) {
-    console.log(info);
     city = info.name;
-    let timestamp = info.dt;
-    let dateObj = new Date(timestamp * 1000);
-    let humanDate = dateObj.toLocaleString("en-US", {weekday: "long", month: "long", day: "numeric", year: "numeric"});;
-    let temperature = Math.round((info.main.temp - 273.5) * 1.8 + 32);
-    let high = Math.round((info.main.temp_max - 273.5) * 1.8 + 32);
-    let low = Math.round((info.main.temp_min - 273.5) * 1.8 + 32);
-    let icon = info.weather[0].icon;
-    let description = info.weather[0].description;
     let lon = info.coord.lon;
     let lat = info.coord.lat;
     let coordUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}`;
@@ -39,8 +57,6 @@ function getForecast(info) {
 
 function saveCity(input){
     var history = localStorage.getItem("search-history");
-    console.log(history);
-    console.log(typeof history);
     var tempArr = []
     if(!input){
         return;
