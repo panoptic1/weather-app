@@ -18,11 +18,15 @@ function renderForecast(info){
     let wind = info.current.wind_speed;
     let humidity = info.current.humidity;
     let icon = info.current.weather[0].icon;
-    let description = info.current.weather[0].description;
+    let description = info.current.weather[0].main;
     
     //create variable for the template that will be appended to the forecast box
     let template = `
-        <span>${city}</span> - <span>${humanDate}</span>
+        <span><strong>${city}</strong></span> - <span><strong>${humanDate}</strong></span>
+        <br>
+        <img alt="${description}" src="http://openweathermap.org/img/wn/${icon}@2x.png">
+        <br>
+        <span class="description"><i>"${description}"</i></span>
         <br>
         <span>Temp: ${temperature}°F</span>
         <br>
